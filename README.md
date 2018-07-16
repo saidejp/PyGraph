@@ -55,7 +55,7 @@ Esto quiere decir que con el lenguaje de programación Python se eliminarán el 
 Update Pgraph.
 
 #### Pgrahp
-Software designed in 1992 to analyze the periodicity and rhythms of the Cicardians. Based on the article by ** Dörrscheidt, GJ & Beck, L., (1975), * Advanced methods for evaluating characteristic parameters ταρ of circadian rhythms *, Journal of Mathematical Biology 2 (2): 107-121 ** [Circadian Rhythms](https://www.researchgate.net/publication/226211468_Advanced_methods_for_evaluating_characteristic_parameters_tar_of_circadian_rhythms) 
+Software designed in 1992 to analyze the periodicity and rhythms of the Cicardians. Based on the article by **Dörrscheidt, GJ & Beck, L., (1975), *Advanced methods for evaluating characteristic parameters ταρ of circadian rhythms*, Journal of Mathematical Biology 2 (2): 107-121** [Circadian Rhythms](https://www.researchgate.net/publication/226211468_Advanced_methods_for_evaluating_characteristic_parameters_tar_of_circadian_rhythms) 
 
 It was developed at the beginning of the 1990s, written in the programming language ** Fortran and C **.
 
