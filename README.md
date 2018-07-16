@@ -39,7 +39,7 @@ Pgraph analiza datos obtenidos por los dispositivos Actiwatch [Actiware](http://
 Pgrahp es necesario para aquellos que hacen o investigan ritmicidad cicardiana y/o periodicidad en humanos y animales. Por lo tanto, es necesario la actualización a sistemas operativos actuales (Linux, Mac, Win10).
 
 ### PyGraph
-Nació bajo para cubrir esta necesidad en el año 2017 como parte de la formación del doctorado en neurociencias de la conducta de la facultad de psiocología de la UNAM.
+Nació bajo para cubrir esta necesidad en el año 2017 como parte de la formación del doctorado en neurociencias de la conducta de la facultad de psicología de la UNAM.
 PyGraph está escrito desde Python 3.6 dentro de "Spyder".
 Se utilizó Python por su sintaxis simple, clara y sencilla. Además de su facilidad de uso, legibilidad del código, facilidad de uso en dispositivos y la abundancia de bibliotecas.
 
@@ -80,7 +80,7 @@ It only runs on Windows 95, 98, Me and XP operating systems. Due to technologica
 Pgrahp is necessary for those who do or investigate cycdic rhythmicity and / or periodicity in humans and animals. Therefore, it is necessary to upgrade to current operating systems (Linux, Mac, Win10).
 
 ### PyGraph
-Created to cover this need in 2017 as part of the formation of the doctorate in behavioral neurosciences of the faculty of psiology of the UNAM.
+Created to cover this need in 2017 as part of the formation of the doctorate in behavioral neurosciences of the faculty of psychology of the UNAM.
 PyGraph is written from Python 3.6 inside "Spyder".
 Python was used for its simple, clear and simple syntax. In addition to its ease of use, readability of the code, ease of use in devices and the abundance of libraries.
 
