@@ -1,3 +1,12 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+plt.style.use('ggplot')
+import numpy as np
+import datetime
+from time import time
+import time
+import os
+import fnmatch
 print('''
       PyGraph
       Desarrollado por Javier Villanueva-Valle,
@@ -6,25 +15,27 @@ print('''
       Ciudad de México, México.
       email: javier830409@gmail.com
       2018-Enero\n\n''')
-import pandas as pd
-import matplotlib.pyplot as plt
-plt.style.use('ggplot')
-import numpy as np
-import datetime
-from time import time
-import os
-import fnmatch
+time.sleep(3)
 #####################################################
-directorio = os.getcwd()
-archivos_AWD = []
-for AWD in os.listdir(directorio):
-    if fnmatch.fnmatch(AWD, "*.AWD"):
-        archivos_AWD.append(AWD)
-print(archivos_AWD)
+target = '*.AWD'
+initial_dir = os.getcwd()
+path_list = [os.path.join(root, file) for root, _, files in os.walk(initial_dir)
+                                          for file in fnmatch.filter(files, target)]
+sujetos = []
+for s in path_list:
+    sujeto = s.split('/')
+    sujeto = sujeto[-1]
+    sujetos.append(sujeto)
+personas = sujetos
+print(sorted(sujetos))
+time.sleep(3)
+lugares = path_list[1].split('/') # Uso Fedora 28 :D
+lugares = lugares[:-1]
+lugares = '/'.join(str(i) for i in lugares)
 #####################################################
 df = str(input('\nEscribe el nombre del archivo que aparece arriba SIN LAS COMILLAS. "ejemplo.AWD"\nArchivo -->  '))
 tiempo_inicial = time()
-df = '{}/{}'.format(directorio, df)
+df = '{}/{}'.format(lugares, df)
 df = pd.read_csv(df, sep='\t')
 nombre = df.columns[0].strip()
 fecha = df.iloc[0, 0]
@@ -90,11 +101,11 @@ tabla_porc_descrip = tabla_porc.describe()
 tabla_z = datos.pivot_table(values=datos.columns[3], index='Hora', columns='Fecha')
 tabla_z_descrip = tabla_z.describe()
 ##### Generar carpeta propia ################
-os.makedirs('{}/{}'.format(directorio, nombre), exist_ok=True)
+os.makedirs('{}/{}'.format(lugares, nombre), exist_ok=True)
 print('Se ha creado la carpeta del actimetro {} bajo el nombre de "{}"'.format(serie_acti, nombre))
 #################################################
 ##### Excel de Datos #####
-writer = pd.ExcelWriter('{}/{}/{} {} {}.xlsx'.format(directorio, nombre, serie_acti, nombre, datetime.datetime.now()))
+writer = pd.ExcelWriter('{}/{}/{} {} {}.xlsx'.format(lugares, nombre, serie_acti, nombre, datetime.datetime.now()))
 datos.to_excel(writer, '{}'.format(serie_acti))
 tabla_ori.to_excel(writer, 'Original')
 tabla_ori_descrip.to_excel(writer, 'Descriptivos_Original')
@@ -111,71 +122,71 @@ tablas_ori = pd.concat([tabla_ori, tabla_ori.iloc[:, 1::2], tabla_ori.iloc[:, 2:
 tablas_ori[Un_día_más] = np.nan
 tablas_ori = tablas_ori.sort_index(axis=1)
 tablas_ori.plot.area(subplots=True, layout=(total_dias, 2), color='k', figsize=tamaño, sharex=True, xlim=(tabla_ori.index.min(), tabla_ori.index.max()), ylim=(datos[datos.columns[0]].min(), datos[datos.columns[0]].max()+10), xticks=horas, yticks=[], rot='vertical', fontsize=15);plt.subplots_adjust(hspace=0);plt.subplots_adjust(wspace=0);plt.xlabel(' ');#plt.xlabel(' ')
-plt.savefig('{}/{}/{}_Original_{}.png'.format(directorio, nombre, nombre, datetime.datetime.now()), bbox_inches='tight')
+plt.savefig('{}/{}/{}_Original_{}.png'.format(lugares, nombre, nombre, datetime.datetime.now()), bbox_inches='tight')
 plt.show()
 ##### Actograma Datos Unformat
 tablas_unfo = pd.concat([tabla_unfo, tabla_unfo.iloc[:, 1::2], tabla_unfo.iloc[:, 2::2]], axis=1)
 tablas_unfo[Un_día_más] = np.nan
 tablas_unfo = tablas_unfo.sort_index(axis=1)
 tablas_unfo.plot.area(subplots=True, layout=(total_dias, 2), color='k', figsize=tamaño, sharex=True, xlim=(tabla_unfo.index.min(), tabla_unfo.index.max()), ylim=(datos[datos.columns[1]].min(), datos[datos.columns[1]].max()+5), xticks=horas, yticks=[], rot='vertical', fontsize=15);plt.subplots_adjust(hspace=0);plt.subplots_adjust(wspace=0);plt.xlabel(' ');#plt.xlabel(' ')
-plt.savefig('{}/{}/{}_Unformat_{}.png'.format(directorio, nombre, nombre, datetime.datetime.now()), bbox_inches='tight')
+plt.savefig('{}/{}/{}_Unformat_{}.png'.format(lugares, nombre, nombre, datetime.datetime.now()), bbox_inches='tight')
 plt.show()
 ##### Actograma Datos Porcentaje
 tablas_porc = pd.concat([tabla_porc, tabla_porc.iloc[:, 1::2], tabla_porc.iloc[:, 2::2]], axis=1)
 tablas_porc[Un_día_más] = np.nan
 tablas_porc = tablas_porc.sort_index(axis=1)
 tablas_porc.plot.area(subplots=True, layout=(total_dias, 2), color='k', figsize=tamaño, sharex=True, xlim=(tabla_porc.index.min(), tabla_porc.index.max()), ylim=(datos[datos.columns[2]].min(), datos[datos.columns[2]].max()+0.1), xticks=horas, yticks=[], rot='vertical', fontsize=15);plt.subplots_adjust(hspace=0);plt.subplots_adjust(wspace=0);plt.xlabel(' ');#plt.xlabel(' ')
-plt.savefig('{}/{}/{}_Porcentaje_{}.png'.format(directorio, nombre, nombre, datetime.datetime.now()), bbox_inches='tight')
+plt.savefig('{}/{}/{}_Porcentaje_{}.png'.format(lugares, nombre, nombre, datetime.datetime.now()), bbox_inches='tight')
 plt.show()
 ##### Actograma Datos Z
 tablas_z = pd.concat([tabla_z, tabla_z.iloc[:, 1::2], tabla_z.iloc[:, 2::2]], axis=1)
 tablas_z[Un_día_más] = np.nan
 tablas_z = tablas_z.sort_index(axis=1)
 tablas_z.plot(subplots=True, layout=(total_dias, 2), color='k', figsize=tamaño, sharex=True, xlim=(tabla_z.index.min(), tabla_z.index.max()), ylim=(datos[datos.columns[3]].min(), datos[datos.columns[3]].max()+1), xticks=horas, yticks=[], rot='vertical', fontsize=15);plt.subplots_adjust(hspace=0);plt.subplots_adjust(wspace=0);plt.xlabel(' ');#plt.xlabel(' ')
-plt.savefig('{}/{}/{}_Z_{}.png'.format(directorio, nombre, nombre, datetime.datetime.now()), bbox_inches='tight')
+plt.savefig('{}/{}/{}_Z_{}.png'.format(lugares, nombre, nombre, datetime.datetime.now()), bbox_inches='tight')
 plt.show()
 ##########################################
 ##### Promedio por Días ######
 ### Tabla Original
 tablas_ori.mean(axis=1).plot(title=nombre, color='k', figsize=(10, 6), xticks=horas, yticks=np.arange(0, max(tablas_ori.mean(axis=1))+400, 400), label='Promedio', fontsize=15); plt.xlabel(' '); plt.tight_layout();
 plt.legend(loc='best', fontsize=15)
-plt.savefig('{}/{}/{}_Original_Promedio_{}.png'.format(directorio, nombre, nombre, datetime.datetime.now()))
+plt.savefig('{}/{}/{}_Original_Promedio_{}.png'.format(lugares, nombre, nombre, datetime.datetime.now()))
 plt.show()
 ### Tabla Unformat
 tabla_unfo.mean(axis=1).plot(title=nombre, color='k', figsize=(10, 6), xticks=horas, yticks=np.arange(0, max(tabla_unfo.mean(axis=1))+50, 50), label='Promedio', fontsize=15); plt.xlabel(' '); plt.tight_layout();
 plt.legend(loc='best', fontsize=15)
-plt.savefig('{}/{}/{}_Unformat_Promedio_{}.png'.format(directorio, nombre, nombre, datetime.datetime.now()))
+plt.savefig('{}/{}/{}_Unformat_Promedio_{}.png'.format(lugares, nombre, nombre, datetime.datetime.now()))
 plt.show()
 ### Tabla Porcentaje
 tabla_porc.mean(axis=1).plot(title=nombre, color='k', figsize=(10, 6), xticks=horas, yticks=np.arange(0, max(tabla_porc.mean(axis=1))+0.05, 0.05), label='Promedio', fontsize=15); plt.xlabel(' '); plt.tight_layout();
 plt.legend(loc='best', fontsize=15)
-plt.savefig('{}/{}/{}_Porcentaje_Promedio_{}.png'.format(directorio, nombre, nombre, datetime.datetime.now()))
+plt.savefig('{}/{}/{}_Porcentaje_Promedio_{}.png'.format(lugares, nombre, nombre, datetime.datetime.now()))
 plt.show()
 ### Tabla Z
 tabla_z.mean(axis=1).plot(title=nombre, color='k', figsize=(10, 6), xticks=horas, yticks=np.arange(min(tabla_z.mean(axis=1)), max(tabla_z.mean(axis=1))+0.2, 0.2), label='Promedio', fontsize=15); plt.xlabel(' '); plt.tight_layout();
 plt.legend(loc='best', fontsize=15)
-plt.savefig('{}/{}/{}_Z_Promedio_{}.png'.format(directorio, nombre, nombre, datetime.datetime.now()))
+plt.savefig('{}/{}/{}_Z_Promedio_{}.png'.format(lugares, nombre, nombre, datetime.datetime.now()))
 plt.show()
 ##### Sumatoria por Días ######
 ### Tabla Original
 tablas_ori.sum(axis=1).plot(title=nombre, color='k', figsize=(10, 6), xticks=horas, yticks=np.arange(0, max(tablas_ori.sum(axis=1))+10000, 10000), label='Sumatoria', fontsize=15); plt.xlabel(' '); plt.tight_layout();
 plt.legend(loc='best', fontsize=15)
-plt.savefig('{}/{}/{}_Original_Sumatoria_{}.png'.format(directorio, nombre, nombre, datetime.datetime.now()))
+plt.savefig('{}/{}/{}_Original_Sumatoria_{}.png'.format(lugares, nombre, nombre, datetime.datetime.now()))
 plt.show()
 ### Tabla Unformat
 tabla_unfo.sum(axis=1).plot(title=nombre, color='k', figsize=(10, 6), xticks=horas, yticks=np.arange(0, max(tabla_unfo.sum(axis=1))+200, 200), label='Sumatoria', fontsize=15); plt.xlabel(' '); plt.tight_layout();
 plt.legend(loc='best', fontsize=15)
-plt.savefig('{}/{}/{}_Unformat_Sumatoria_{}.png'.format(directorio, nombre, nombre, datetime.datetime.now()))
+plt.savefig('{}/{}/{}_Unformat_Sumatoria_{}.png'.format(lugares, nombre, nombre, datetime.datetime.now()))
 plt.show()
 ### Tabla Porcentaje
 tabla_porc.sum(axis=1).plot(title=nombre, color='k', figsize=(10, 6), xticks=horas, yticks=np.arange(0, max(tabla_porc.sum(axis=1))+0.2, 0.2), label='Sumatoria', fontsize=15); plt.xlabel(' '); plt.tight_layout();
 plt.legend(loc='best', fontsize=15)
-plt.savefig('{}/{}/{}_Porcentaje_Sumatoria_{}.png'.format(directorio, nombre, nombre, datetime.datetime.now()))
+plt.savefig('{}/{}/{}_Porcentaje_Sumatoria_{}.png'.format(lugares, nombre, nombre, datetime.datetime.now()))
 plt.show()
 ### Tabla Z
 tabla_z.sum(axis=1).plot(title=nombre, color='k', figsize=(10, 6), xticks=horas, yticks=np.arange(min(tabla_z.sum(axis=1)), max(tabla_z.sum(axis=1))+2, 2), label='Sumatoria', fontsize=15); plt.xlabel(' '); plt.tight_layout();
 plt.legend(loc='best', fontsize=15)
-plt.savefig('{}/{}/{}_Z_promedio_{}.png'.format(directorio, nombre, nombre, datetime.datetime.now()))
+plt.savefig('{}/{}/{}_Z_promedio_{}.png'.format(lugares, nombre, nombre, datetime.datetime.now()))
 plt.show()
 tiempo_final = time()
 tiempo_ejecución = tiempo_final - tiempo_inicial
