@@ -3,13 +3,12 @@ import matplotlib.pyplot as plt
 plt.style.use('ggplot')
 import numpy as np
 import datetime
-from time import time
 import time
 import os
 import fnmatch
 print('''
       PyGraph
-      Desarrollado por Javier Villanueva-Valle,
+      Desarrollado por --- Javier Villanueva-Valle ---,
       Estudiante de Doctorado en Neurociencias de la Conducta,
       Facultad de Psicología, UNAM.
       Ciudad de México, México.
@@ -26,15 +25,16 @@ for s in path_list:
     sujeto = s.split('/')
     sujeto = sujeto[-1]
     sujetos.append(sujeto)
-personas = sujetos
 print(sorted(sujetos))
 time.sleep(3)
 lugares = path_list[1].split('/') # Uso Fedora 28 :D
 lugares = lugares[:-1]
 lugares = '/'.join(str(i) for i in lugares)
+#print(lugares)
 #####################################################
-df = str(input('\nEscribe el nombre del archivo que aparece arriba SIN LAS COMILLAS. "ejemplo.AWD"\nArchivo -->  '))
-tiempo_inicial = time()
+df = str(input("""\nEscribe el nombre del archivo que aparece arriba SIN LAS COMILLAS. 
+               'ejemplo.AWD' --> ejemplo.AWD\nArchivo -->  """))
+tiempo_inicial = time.time()
 df = '{}/{}'.format(lugares, df)
 df = pd.read_csv(df, sep='\t')
 nombre = df.columns[0].strip()
@@ -188,6 +188,6 @@ tabla_z.sum(axis=1).plot(title=nombre, color='k', figsize=(10, 6), xticks=horas,
 plt.legend(loc='best', fontsize=15)
 plt.savefig('{}/{}/{}_Z_promedio_{}.png'.format(lugares, nombre, nombre, datetime.datetime.now()))
 plt.show()
-tiempo_final = time()
+tiempo_final = time.time()
 tiempo_ejecución = tiempo_final - tiempo_inicial
 print('Listo\nTiempo de Procesamiento = {}\n'.format(datetime.timedelta(seconds=round(tiempo_ejecución, 2))))
