@@ -18,7 +18,6 @@ time.sleep(3)
 #####################################################
 target = '*.AWD'
 initial_dir = os.getcwd()
-lugares = path_list[1].split('/') # Uso Fedora 28 :D
 path_list = [os.path.join(root, file) for root, _, files in os.walk(initial_dir)
                                           for file in fnmatch.filter(files, target)]
 sujetos = []
