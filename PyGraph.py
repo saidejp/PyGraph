@@ -30,9 +30,10 @@ print(sorted(sujetos))
 print('\n')
 print('+-'*len('Javier Villanueva Valle'))
 print("""Por favor cumple con estas condiciones para que tu archivo sea analizado:
-          1.- Escribe el nombre del archivo con extensión *.AWD 'SIN LAS COMILLAS,'
-          2.- Escribe el nombre del archivo con extensión *.AWD respetando las letras MAYUSCULAS Y minusculas,
-          3.- Escribe el nombre del archivo con extensión *.AWD tal cual aparece.""")
+    Escribe el nombre del archivo con extensión *.AWD
+          1.- 'SIN LAS COMILLAS',
+          2.- Respetando las letras MAYUSCULAS Y minusculas,
+          3.- Revisa que tu archivo se encuentre.""")
 print('+-'*len('Javier Villanueva Valle'))
 time.sleep(2)
 lugares = path_list[1].split('/') # Uso Ubuntu 18.04 :D
@@ -41,14 +42,14 @@ lugares = '/'.join(str(i) for i in lugares)
 #print(lugares)
 #####################################################
 while True:
-    df = str(input("""\nEscribe el nombre del archivo que aparece en la lista de arriba. 
-'ejemplo.AWD' --> ejemplo.AWD\n
+    df = str(input("""
+Escribe el nombre del archivo que aparece en la lista de arriba. 
+'ejemplo.AWD' --> ejemplo.AWD
 'Archivo.AWD' -->  """))
-    df_verificado = df in sujetos
-    if df_verificado is True:
+    if (df in sujetos) == True:
         break
     else:
-        print('ERROR. Escribe el nombre de tu archivo siguiendo las condiciones antes mostradas, gracias.')
+        print('######### ERROR #########.\nEscribe el nombre de tu archivo siguiendo las condiciones antes mostradas, gracias.')
         time.sleep(2)
 tiempo_inicial = time.time()
 df = '{}/{}'.format(lugares, df)
