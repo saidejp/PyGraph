@@ -25,28 +25,30 @@ for s in path_list:
     sujeto = s.split('/')
     sujeto = sujeto[-1]
     sujetos.append(sujeto)
-print('Esta es la lista de los archivos con extensión *.AWD.\n')
+print('Esta es la lista de los archivos con extensión *.AWD que aparecieron donde ejecutaste este script.\n')
 print(sorted(sujetos))
-print()
-print("""\nPor favor cumple con estas condiciones para que tu archivo sea analizado:
+print('\n')
+print('+-'*len('Javier Villanueva Valle'))
+print("""Por favor cumple con estas condiciones para que tu archivo sea analizado:
           1.- Escribe el nombre del archivo con extensión *.AWD 'SIN LAS COMILLAS,'
           2.- Escribe el nombre del archivo con extensión *.AWD respetando las letras MAYUSCULAS Y minusculas,
           3.- Escribe el nombre del archivo con extensión *.AWD tal cual aparece.""")
+print('+-'*len('Javier Villanueva Valle'))
 time.sleep(2)
-lugares = path_list[1].split('/') # Uso Fedora 28 :D
+lugares = path_list[1].split('/') # Uso Ubuntu 18.04 :D
 lugares = lugares[:-1]
 lugares = '/'.join(str(i) for i in lugares)
 #print(lugares)
 #####################################################
 while True:
     df = str(input("""\nEscribe el nombre del archivo que aparece en la lista de arriba. 
-    'ejemplo.AWD' --> ejemplo.AWD\n
-     Archivo.AWD  -->  """))
+'ejemplo.AWD' --> ejemplo.AWD\n
+'Archivo.AWD' -->  """))
     df_verificado = df in sujetos
     if df_verificado is True:
         break
     else:
-        print('Error. Escribe el nombre de tu archivo siguiendo las condiciones antes mostradas, gracias.')
+        print('ERROR. Escribe el nombre de tu archivo siguiendo las condiciones antes mostradas, gracias.')
         time.sleep(2)
 tiempo_inicial = time.time()
 df = '{}/{}'.format(lugares, df)
