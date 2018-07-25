@@ -15,7 +15,7 @@ print('''
       email: javier830409@gmail.com
       2018-Enero\n\n''')
 time.sleep(3)
-#####################################################
+##### Busquéda de archivo ################################################
 target = '*.AWD'
 initial_dir = os.getcwd()
 path_list = [os.path.join(root, file) for root, _, files in os.walk(initial_dir)
@@ -39,8 +39,7 @@ time.sleep(2)
 lugares = path_list[1].split('/') # Uso Ubuntu 18.04 :D
 lugares = lugares[:-1]
 lugares = '/'.join(str(i) for i in lugares)
-#print(lugares)
-#####################################################
+##### Análisis de archivo seleccionado ################################################
 while True:
     df = str(input("""
 Escribe el nombre del archivo que aparece en la lista de arriba. 
