@@ -91,19 +91,14 @@ horas = pd.to_datetime(horas['Fecha_Hora']).dt.time
 horas = list(horas)
 if total_dias in np.arange(2, 11, 1):
     tamaño = (6, 10)
-    titulo = '\nActograma\n{}. {}. Edad {} años. {}.'.format(serie_acti, nombre, edad, sexo)
 elif total_dias in np.arange(11, 32, 1):
     tamaño = (10, 20)
-    titulo = '\nActograma\n{}. {}. Edad {} años. {}.'.format(serie_acti, nombre, edad, sexo)
 elif total_dias in np.arange(31, 91, 1):
     tamaño = (10, 40)
-    titulo = '\nActograma\n{}. {}. Edad {} años. {}.'.format(serie_acti, nombre, edad, sexo)
 elif total_dias in np.arange(91, 182, 1):
     tamaño = (10, 50)
-    titulo = '\nActograma\n{}. {}. Edad {} años. {}.'.format(serie_acti, nombre, edad, sexo)
 elif total_dias in np.arange(182, 366, 1):
     tamaño = (12, 180)
-    titulo = '\nActograma\n{}. {}. Edad {} años. {}.'.format(serie_acti, nombre, edad, sexo)
 datos['Fecha'] = datos.index
 datos['Fecha'] = pd.to_datetime(datos['Fecha']).dt.date.to_frame()
 datos['Hora'] = datos.index
@@ -117,22 +112,22 @@ tabla_porc = datos.pivot_table(values=datos.columns[2], index='Hora', columns='F
 tabla_porc_descrip = tabla_porc.describe().round(3)
 tabla_z = datos.pivot_table(values=datos.columns[3], index='Hora', columns='Fecha')
 tabla_z_descrip = tabla_z.describe().round(3)
-##### Imprimiendo datos generales
-print('\n#Datos Generales#')
+##### Imprimiendo datos
+print('\n## Datos Generales ##')
 print('Nombre -> {}'.format(nombre))
 print('Sexo ---> {}'.format(sexo))
 print('Edad ---> {} años'.format(edad))
-print('\n#Datos del Actimetro#')
+print('\n## Datos del Actimetro ##')
 print('Serie del Actimetro ------> {}'.format(serie_acti))
 print('Intervalo ----------------> {}'.format(inter))
 print('Total de días analizados -> {}'.format(total_dias))
 print('Fecha inicio -------------> {}'.format(datos.index[0]))
 print('Fecha final --------------> {}'.format(datos.index[-1]))
-print('Cantidad de datos --------> {}'.format(len(datos.index)))
+print('Cantidad de datos --------> {}'.format(datos.shape[0]))
 
 ##### Generar carpeta propia ################
 os.makedirs('{}/{}'.format(lugares, nombre), exist_ok=True)
-print('Se ha creado la carpeta del actimetro {} bajo el nombre de "{}"'.format(serie_acti, nombre))
+print('Se ha creado la carpeta "{1}" del actimetro {0}'.format(serie_acti, nombre))
 #################################################
 ##### Excel de Datos #####
 writer = pd.ExcelWriter('{}/{}/{} {} {}.xlsx'.format(lugares, nombre, serie_acti, nombre, datetime.datetime.now()))
