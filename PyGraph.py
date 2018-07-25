@@ -48,7 +48,7 @@ Escribe el nombre del archivo que aparece en la lista de arriba.
     if (df in sujetos) == True:
         break
     else:
-        print('######### ERROR #########.\nEscribe el nombre de tu archivo siguiendo las condiciones antes mostradas, gracias.')
+        print('######### ERROR #########\nEscribe el nombre de tu archivo siguiendo las condiciones antes mostradas, gracias.')
         time.sleep(2)
 tiempo_inicial = time.time()
 df = '{}/{}'.format(lugares, df)
@@ -63,9 +63,11 @@ frecu = str(int(df.iloc[2, 0]))
 if frecu == '4':
     frecu = '1T'
     len_datos = 1440
+    inter = '1 minuto'
 elif frecu == '20':
     frecu = '5T'
     len_datos = 288
+    inter = '5 minutos'
 edad = int(df.iloc[3, 0])
 serie_acti = df.iloc[4, 0]
 sexo = df.iloc[5, 0]
@@ -80,7 +82,6 @@ datos['Unformat'] = (datos.iloc[:, 0:1]*999)/datos.iloc[:, 0:1].max()# Convertid
 datos['Porcentaje'] = (datos.iloc[:, 0:1]*1)/datos.iloc[:, 0:1].max()# Convertido a Porcentaje
 datos['Puntaje_Z'] = (datos.iloc[:, 0:1] - datos.iloc[:, 0:1].mean())/datos.iloc[:, 0:1].std(ddof=0)# Convertido Puntaje Z EJEMPLO(df.a - df.a.mean())/df.a.std(ddof=0)
 datos = datos.rename(columns={datos.columns[0]:nombre})
-sum_dias = round(datos.resample('1D').sum()/len_datos).min()*100
 total_dias = len(datos.resample('1D'))
 horas = pd.date_range(datetime.date.today(), periods=len_datos, freq=frecu)
 ts = pd.Series(np.random.randn(len(horas)), index=horas)
@@ -116,6 +117,19 @@ tabla_porc = datos.pivot_table(values=datos.columns[2], index='Hora', columns='F
 tabla_porc_descrip = tabla_porc.describe()
 tabla_z = datos.pivot_table(values=datos.columns[3], index='Hora', columns='Fecha')
 tabla_z_descrip = tabla_z.describe()
+##### Imprimiendo datos generales
+print('\nDatos Generales')
+print('Nombre -> {}'.format(nombre))
+print('Sexo ---> {}'.format(sexo))
+print('Edad ---> {} años'.format(edad))
+print('\nDatos del Actimetro')
+print('Serie del Actimetro ------> {}'.format(serie_acti))
+print('Intervalo ----------------> {}'.format(inter))
+print('Total de días analizados -> {}'.format(total_dias))
+print('Fecha inicio -------------> {}'.format(datos.index[0]))
+print('Fecha final --------------> {}'.format(datos.index[-1]))
+print('Cantidad de datos --------> {}'.format(len(datos.index)))
+
 ##### Generar carpeta propia ################
 os.makedirs('{}/{}'.format(lugares, nombre), exist_ok=True)
 print('Se ha creado la carpeta del actimetro {} bajo el nombre de "{}"'.format(serie_acti, nombre))
