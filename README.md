@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/github/Sivlemx/PyGraph/badge.svg?branch=master)](https://coveralls.io/github/Sivlemx/PyGraph?branch=master)
+
 # PyGraph
 
 Software para analizar periodicidad y ritmicidad ciardiana en humanos y animales. 
