@@ -125,6 +125,15 @@ print('Fecha inicio -------------> {}'.format(datos.index[0]))
 print('Fecha final --------------> {}'.format(datos.index[-1]))
 print('Cantidad de datos --------> {}'.format(datos.shape[0]))
 
+cantidad = [int(i) for i in str(datos.shape[0])]
+print(cantidad)
+
+cantidad1 = list(str(datos.shape[0]))
+cantidad2 = map(int, str(datos.shape[0]))
+
+print(datos.shape[0], sep=" ")
+
+
 ##### Generar carpeta propia ################
 os.makedirs('{}/{}'.format(lugares, nombre), exist_ok=True)
 print('Se ha creado la carpeta "{1}" del actimetro {0}'.format(serie_acti, nombre))
