@@ -1,3 +1,4 @@
 repo_token: 6oNb1DXUr82KU7EauMfKJt1JF8R9plDIf
 service_name: travis-pro
 parallel: true
+gem 'coveralls', require: false
